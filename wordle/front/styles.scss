@@ -1,0 +1,64 @@
+// Variables
+$primary-green: #6aaa64;
+$yellow: #c9b458;
+$border-color: rgb(0, 0, 0);
+$bg-gradient-start: #fcfcfc;
+$bg-gradient-end: #737373;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin celda-base {
+  border: 2px solid $border-color;
+  width: 40px;
+  height: 40px;
+  margin: 4px;
+  text-align: center;
+  font-size: 24px;
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 40px;
+  border-radius: 15%;
+}
+
+// Estilos globales
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-image: linear-gradient(to bottom, $bg-gradient-start, $bg-gradient-end);
+  font-family: Arial, sans-serif;
+}
+
+// Componentes
+.fila {
+  @include flex-center;
+  margin-bottom: 10px;
+  font: 1em Arial;
+}
+
+.celda {
+  @include celda-base;
+  background-color: transparent;
+  
+  &_vacia {
+    @include celda-base;
+    background-color: transparent;
+  }
+  
+  &_ok {
+    @include celda-base;
+    background-color: $primary-green;
+  }
+  
+  &_casi {
+    @include celda-base;
+    background-color: $yellow;
+  }
+}
