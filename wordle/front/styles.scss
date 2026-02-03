@@ -2,8 +2,13 @@
 $primary-green: #6aaa64;
 $yellow: #c9b458;
 $border-color: rgb(0, 0, 0);
+$grey: #787c7e;
 $bg-gradient-start: #fcfcfc;
 $bg-gradient-end: #737373;
+
+// Breakpoints
+$mobile: 768px;
+$small-mobile: 480px;
 
 // Mixins
 @mixin flex-center {
@@ -14,51 +19,133 @@ $bg-gradient-end: #737373;
 
 @mixin celda-base {
   border: 2px solid $border-color;
-  width: 40px;
-  height: 40px;
-  margin: 4px;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
   text-align: center;
-  font-size: 24px;
+  font-size: 28px;
   text-transform: uppercase;
   font-weight: bold;
-  line-height: 40px;
-  border-radius: 15%;
+  line-height: 60px;
+  border-radius: 8px;
+}
+
+@mixin responsive($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
 }
 
 // Estilos globales
+* {
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 100vh;
   background-image: linear-gradient(to bottom, $bg-gradient-start, $bg-gradient-end);
   font-family: Arial, sans-serif;
+  padding: 40px 20px;
+  margin: 0;
+  
+  @include responsive($mobile) {
+    padding: 20px 10px;
+    justify-content: center;
+  }
+  
+  @include responsive($small-mobile) {
+    padding: 15px 5px;
+  }
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0 0 30px 0;
+  font-weight: bold;
+  
+  @include responsive($mobile) {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+  }
+  
+  @include responsive($small-mobile) {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
 }
 
 // Componentes
+.cuadricula-5x5 {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  max-width: 350px;
+  
+  @include responsive($mobile) {
+    --celda-gap: 12px;
+    width: 100%;
+    max-width: min(520px, 94vw);
+    padding: 0;
+    gap: var(--celda-gap);
+  }
+  
+  @include responsive($small-mobile) {
+    --celda-gap: 8px;
+  }
+}
+
 .fila {
   @include flex-center;
-  margin-bottom: 10px;
-  font: 1em Arial;
+  gap: 5px;
+  width: 100%;
+  
+  @include responsive($mobile) {
+    gap: var(--celda-gap, 12px);
+  }
 }
 
 .celda {
   @include celda-base;
   background-color: transparent;
+  transition: all 0.2s ease;
+  
+  @include responsive($mobile) {
+    flex: 1 1 calc((100% - (var(--celda-gap, 12px) * 4)) / 5);
+    width: auto;
+    max-width: 110px;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    margin: 0;
+    line-height: 1;
+    font-size: clamp(28px, 7vw, 42px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @include responsive($small-mobile) {
+    max-width: 95px;
+    font-size: clamp(24px, 9vw, 38px);
+  }
   
   &_vacia {
-    @include celda-base;
     background-color: transparent;
   }
   
   &_ok {
-    @include celda-base;
     background-color: $primary-green;
   }
   
   &_casi {
-    @include celda-base;
     background-color: $yellow;
+  }
+
+  &_mal {
+    background-color: $grey;
   }
 }
