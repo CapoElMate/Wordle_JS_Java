@@ -1,5 +1,7 @@
 let filaActual = 0;
 let letraActual = 0;
+const intentosMaximos = 5;
+const letrasPorPalabra = 5;
 
 let palabraSecreta = ""; //luego va a ser una consulta al servidor
 
@@ -18,12 +20,12 @@ function crearInterfazJuego() {
 
     const filas = document.createElement('div');
     filas.className = 'cuadricula-5x5';
-    for (let j = 0; j < 5; j++) 
+    for (let j = 0; j < intentosMaximos; j++) 
         {
         const fila = document.createElement('div');
         fila.className = 'fila';
 
-        for (let i = 0; i < 5; i++) 
+        for (let i = 0; i < letrasPorPalabra; i++) 
             {
             const celda = document.createElement('div');
             celda.className = 'celda';
@@ -86,8 +88,8 @@ function enviarPalabra() {
         palabraIntento += celdas[i].textContent;
     }
 
-    if (palabraIntento.length < 5) {
-        alert('La palabra debe tener 5 letras.');
+    if (palabraIntento.length < letrasPorPalabra) {
+        alert(`La palabra debe tener ${letrasPorPalabra} letras.`);
         return;
     }
     celdas_estado = [];

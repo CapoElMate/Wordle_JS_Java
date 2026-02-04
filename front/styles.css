@@ -1,0 +1,133 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  min-height: 100svh;
+  background-image: linear-gradient(to bottom, #fcfcfc, #737373);
+  font-family: Arial, sans-serif;
+  padding: 32px 16px;
+  padding-bottom: calc(32px + env(safe-area-inset-bottom));
+  margin: 0;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  body {
+    padding: 20px 12px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    justify-content: center;
+  }
+}
+@media (max-width: 480px) {
+  body {
+    padding: 16px 10px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0 0 30px 0;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: #111;
+}
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+}
+
+.cuadricula-5x5 {
+  display: flex;
+  flex-direction: column;
+  --celda-size: clamp(52px, 7vw, 70px);
+  --celda-gap: clamp(6px, 1.6vw, 10px);
+  gap: var(--celda-gap);
+  width: 100%;
+  max-width: min(420px, 92vw);
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+@media (max-width: 768px) {
+  .cuadricula-5x5 {
+    --celda-size: clamp(48px, 16vw, 68px);
+    --celda-gap: clamp(6px, 3vw, 10px);
+    max-width: min(520px, 94vw);
+    padding: 8px;
+  }
+}
+@media (max-width: 480px) {
+  .cuadricula-5x5 {
+    --celda-size: clamp(44px, 18vw, 62px);
+    --celda-gap: clamp(6px, 3.5vw, 10px);
+  }
+}
+
+.fila {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--celda-gap);
+  width: 100%;
+}
+
+.celda,
+.celda_ok,
+.celda_casi,
+.celda_mal {
+    border: 2px solid #d3d6da;
+    width: var(--celda-size, 60px);
+    height: var(--celda-size, 60px);
+    margin: 0;
+    text-align: center;
+    font-size: calc(var(--celda-size, 60px) * 0.55);
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    transition: transform 0.12s ease, background-color 0.2s ease, border-color 0.2s ease;
+    color: #111;
+}
+
+.celda_vacia {
+    background-color: transparent;
+}
+
+.celda_ok {
+  background-color: #6aaa64;
+  border-color: #6aaa64;
+  color: #fff;
+}
+
+.celda_casi {
+  background-color: #c9b458;
+  border-color: #c9b458;
+  color: #fff;
+}
+
+.celda_mal {
+  background-color: #787c7e;
+  border-color: #787c7e;
+  color: #fff;
+}
+
+/*# sourceMappingURL=styles.css.map */
