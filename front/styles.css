@@ -9,7 +9,7 @@ body {
   justify-content: flex-start;
   min-height: 100vh;
   min-height: 100svh;
-  background-image: linear-gradient(to bottom, #fcfcfc, #737373);
+  background-image: linear-gradient(to bottom, #81b784, #3d6c40);
   font-family: Arial, sans-serif;
   padding: 32px 16px;
   padding-bottom: calc(32px + env(safe-area-inset-bottom));
@@ -34,6 +34,7 @@ h1 {
   font-size: 2.5rem;
   margin: 0 0 30px 0;
   font-weight: bold;
+  font-family: "JetBrains Mono", monospace;
   letter-spacing: 0.5px;
   color: #111;
 }
@@ -50,7 +51,7 @@ h1 {
   }
 }
 
-.cuadricula-5x5 {
+.cuadricula {
   display: flex;
   flex-direction: column;
   --celda-size: clamp(52px, 7vw, 70px);
@@ -64,7 +65,7 @@ h1 {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 @media (max-width: 768px) {
-  .cuadricula-5x5 {
+  .cuadricula {
     --celda-size: clamp(48px, 16vw, 68px);
     --celda-gap: clamp(6px, 3vw, 10px);
     max-width: min(520px, 94vw);
@@ -72,7 +73,7 @@ h1 {
   }
 }
 @media (max-width: 480px) {
-  .cuadricula-5x5 {
+  .cuadricula {
     --celda-size: clamp(44px, 18vw, 62px);
     --celda-gap: clamp(6px, 3.5vw, 10px);
   }
@@ -90,26 +91,27 @@ h1 {
 .celda_ok,
 .celda_casi,
 .celda_mal {
-    border: 2px solid #d3d6da;
-    width: var(--celda-size, 60px);
-    height: var(--celda-size, 60px);
-    margin: 0;
-    text-align: center;
-    font-size: calc(var(--celda-size, 60px) * 0.55);
-    text-transform: uppercase;
-    font-weight: bold;
-    line-height: 1;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-    transition: transform 0.12s ease, background-color 0.2s ease, border-color 0.2s ease;
-    color: #111;
+  border: 2px solid #d3d6da;
+  width: var(--celda-size, 60px);
+  height: var(--celda-size, 60px);
+  margin: 0;
+  text-align: center;
+  font-size: calc(var(--celda-size, 60px) * 0.55);
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  font-family: "JetBrains Mono", monospace;
+  transition: transform 0.12s ease, background-color 0.2s ease, border-color 0.2s ease;
+  color: #111;
 }
 
 .celda_vacia {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .celda_ok {
@@ -128,6 +130,11 @@ h1 {
   background-color: #787c7e;
   border-color: #787c7e;
   color: #fff;
+}
+
+@font-face {
+  font-family: "JetBrains Mono"; /* Name you choose for the font */
+  src: url("static/JetBrainsMono-Bold.ttf") format("truetype"); /* Path to the font file */
 }
 
 /*# sourceMappingURL=styles.css.map */

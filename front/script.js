@@ -1,6 +1,6 @@
 let filaActual = 0;
 let letraActual = 0;
-const intentosMaximos = 5;
+const intentosMaximos = 6;
 const letrasPorPalabra = 5;
 
 
@@ -13,6 +13,7 @@ let celdas_estado = []; // array que guarda el estado de cada letra del intento 
 function inicializarJuego() {
       
     //crear la interfaz del juego
+
     crearInterfazJuego();
     asignarPalabraSecreta();
     asignarEventos();
@@ -23,7 +24,7 @@ function crearInterfazJuego() {
     
 
     const filas = document.createElement('div');
-    filas.className = 'cuadricula-5x5';
+    filas.className = 'cuadricula';
     for (let j = 0; j < intentosMaximos; j++) 
         {
         const fila = document.createElement('div');
@@ -97,23 +98,39 @@ async function enviarPalabra() {
         alert(`La palabra debe tener ${letrasPorPalabra} letras.`);
         return;
     }
-    celdas_estado = [];
+    
 
-    const esValida = await esPalabraValida(palabraIntento);
+    let esValida = false;
+    try {
+         esValida = await esPalabraValida(palabraIntento);        
+    } catch (error) {
+        alert('Error al verificar la palabra.');
+        return;
+    }
+
     if (esValida === false) {
         alert('La palabra no es válida.');
         return;
     }
-    celdas_estado = await evaluarPalabra(palabraIntento);
+
+    celdas_estado = [];
+    try {
+        celdas_estado = await evaluarPalabra(palabraIntento);
+    } catch (error) {
+        alert('Error al evaluar la palabra.');    
+        return;
+    }
+
     actualizarInterfaz(celdas, celdas_estado);
-    
+
     if (celdas_estado.every(estado => estado === 'ok')) {
         alert('¡Felicidades! Has adivinado la palabra.');
+        return;
     }
 
     filaActual++;
-    if (filaActual >= 5) {
-        alert('Juego terminado. No adivinaste la palabra.');
+    if (filaActual >= intentosMaximos) {
+        alert('Juego terminado. No adivinaste la palabra :( ');
         document.removeEventListener('keydown', manejarTecla);
     }
 }
@@ -141,31 +158,16 @@ async function evaluarPalabra(palabraIntento) {
 
     const request = new Request(`http://localhost:8080/api/guess?guess=${encodeURIComponent(palabraIntento)}`);
 
-    try {
-        const response = await fetch(request);
-        const data = await response.json();
+    const response = await fetch(request);
+    const data = await response.json();
 
-        if (data === "Palabra no valida") {
-            alert('La palabra no es válida.');
-            return [];
-        }
-
-        return data.result.map(element => element + "");
-    } catch (error) {
+    if (data === "Palabra no valida") {
         alert('La palabra no es válida.');
         return [];
     }
-}
-// for (let i = 0; i < 5; i++) {
-//         if (palabraIntento[i] === palabraSecreta[i]) {
-//             celdas_estado.push('ok');
-//         } else if (palabraSecreta.includes(palabraIntento[i])) {
-//             celdas_estado.push('casi');
-//         } else {
-//             celdas_estado.push('mal');
-//         }
-//     }
 
+    return data.result.map(element => element + "");
+}
 
 
 async function esPalabraValida(palabra) {
@@ -175,20 +177,14 @@ async function esPalabraValida(palabra) {
     const request = new Request(`http://localhost:8080/api/esPalabraValida?palabra=${encodeURIComponent(palabra)}`);
 
     
-    try {
-        const response = await fetch(request);
-        const data = await response.json();
-        
-        if (data === true) {
-            return true;
-        }
-        return false;
-
-    } catch (error) {
-        console.error('Error al verificar la palabra:', error);
-        alert('Error!', error);
-        return false;
+    const response = await fetch(request);
+    const data = await response.json();
+    
+    if (data === true) {
+        return true;
     }
+    return false;
+        
 }
 
 function asignarPalabraSecreta() {
