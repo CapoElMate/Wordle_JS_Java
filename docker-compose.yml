@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  back:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./back/src/main/resources/static:/app/src/main/resources/static
+
+  
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    volumes:
+      - /app/node_modules
