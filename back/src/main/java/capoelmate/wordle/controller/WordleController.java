@@ -1,6 +1,7 @@
 package capoelmate.wordle.controller;
 
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class WordleController {
     
     private WordleService wordleService;
@@ -30,9 +32,7 @@ public class WordleController {
     @GetMapping("/guess")
     public String guess(@RequestParam String guess) {
 
-        if(!wordleService.palabraValida(guess)) {
-            return "Palabra no valida";
-        }
+        guess = guess.toLowerCase();
 
         String[] word = wordleService.guess(guess);
         
@@ -40,4 +40,15 @@ public class WordleController {
         return "{\"result\": [\"" + String.join("\", \"", word) + "\"]}";
         
     }
+
+
+    @GetMapping("/esPalabraValida")
+    public boolean esPalabraValida(@RequestParam String palabra) {
+
+        palabra = palabra.toLowerCase();
+
+        return wordleService.palabraValida(palabra);
+        
+    }
+
 }
