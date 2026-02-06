@@ -54,6 +54,7 @@ public class WordsRepository {
 
     public String getWord(int index) {
         //devuelve la palabra en la posicion index
+        System.out.println("getWord index: " + index + " word: " + (String) words.toArray()[index]);
         return (String) words.toArray()[index];
     }
 
