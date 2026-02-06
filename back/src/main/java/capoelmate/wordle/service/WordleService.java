@@ -50,15 +50,22 @@ public class WordleService {
 
         //si no hay una palabra del dia, se elige una palabra aleatoria
         
-        int size = wordsRepository.getSize();
+        int size = 500;
         //solo quiero las primeras 500 palabras, asi que recorto el size a 500
-        if (size > 500) {
-            size = 500;
+        if (wordsRepository.getSize() < 500) {
+            size = wordsRepository.getSize() ;
         }
 
         do{
             //obtiene una al azar hasta que no se haya usado
-            palabraElegida = wordsRepository.getWord((int)(Math.random() * size));
+            double nroRandomFloat = Math.random() * size;
+            System.out.println("palabra elegida: " + nroRandomFloat);
+
+            int nroRandom = (int)(nroRandomFloat);
+            System.out.println("palabra elegida: " + nroRandom);
+
+            palabraElegida = wordsRepository.getWord(nroRandom);
+            System.out.println("palabra elegida: " + palabraElegida);
         }while(wordsRepository.getPalabrasUsadas().get(palabraElegida) != null);
 
         //cuando se elige una palabra, se escribe en la base de datos sqlite, para no volver a elegirla en el futuro
