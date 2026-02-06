@@ -3,7 +3,7 @@ let letraActual = 0;
 const intentosMaximos = 6;
 const letrasPorPalabra = 5;
 
-
+const BACKEND_URL = (window.__ENV__ && window.__ENV__.BACKEND_URL) || "http://localhost:8080";
 
 let palabraSecreta = ""; //luego va a ser una consulta al servidor
 
@@ -156,7 +156,7 @@ async function evaluarPalabra(palabraIntento) {
     //Get al servidor con la palabra intento http://localhost:8080/api/guess?guess=palabraIntento
     // el servidor devuelve un array con el estado de cada letra
 
-    const request = new Request(`http://localhost:8080/api/guess?guess=${encodeURIComponent(palabraIntento)}`);
+    const request = new Request(`${BACKEND_URL}/api/guess?guess=${encodeURIComponent(palabraIntento)}`);
 
     const response = await fetch(request);
     const data = await response.json();
@@ -174,7 +174,7 @@ async function esPalabraValida(palabra) {
     // aca tengo q implementar la lógica para verificar si la palabra es válida.
     // Por simplicidad, asumimos que cualquier palabra de 5 letras es válida.
     // luego tendria que hacer que la verificacion se haga en el servidor
-    const request = new Request(`http://localhost:8080/api/esPalabraValida?palabra=${encodeURIComponent(palabra)}`);
+    const request = new Request(`${BACKEND_URL}/api/esPalabraValida?palabra=${encodeURIComponent(palabra)}`);
 
     
     const response = await fetch(request);
